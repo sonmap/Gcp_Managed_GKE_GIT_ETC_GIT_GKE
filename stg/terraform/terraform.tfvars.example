@@ -1,0 +1,13 @@
+host_project_id    = "pjt-d-shared-base"
+service_project_id = "prj-b-cicd-local-236d"
+region             = "asia-northeast3"
+network_name       = "vpc-d-shared-base"
+cluster_name       = "gke-gitlab-stg-01"
+gitlab_host_name   = "gitlab-stg"
+gitlab_base_domain = "sonmap.net"
+
+gitlab_initial_root_password = "ChangeMe-Use-Strong-Password-1234!"
+
+db_tier              = "db-custom-2-7680"
+redis_memory_size_gb = 1
+deletion_protection  = false
