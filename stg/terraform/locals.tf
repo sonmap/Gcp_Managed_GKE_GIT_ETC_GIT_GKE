@@ -1,5 +1,6 @@
 locals {
-  network_self_link = "projects/${var.host_project_id}/global/networks/${var.network_name}"
+  network_self_link    = "projects/${var.host_project_id}/global/networks/${var.network_name}"
+  gke_subnet_self_link = var.create_network_subnets ? google_compute_subnetwork.gke[0].self_link : data.google_compute_subnetwork.gke_existing[0].self_link
 
   subnets = {
     gke = {
