@@ -4,17 +4,44 @@
 
 | Area | Terraform resource | Name | CIDR / Spec | Purpose |
 |---|---|---|---|---|
-| Network | `google_compute_subnetwork.gke` | `subnet-gke-gitlab-stg` | `172.31.30.0/27` | GKE Autopilot node subnet |
-| Pod Range | secondary range | `pod-gitlab` | `10.30.0.0/22` | GitLab Pod IP |
-| Service Range | secondary range | `svc-gitlab` | `10.30.4.0/24` | GKE Service IP |
-| Cloud Run | `google_compute_subnetwork.cloudrun` | `subnet-cloudrun-egress-stg` | `172.31.30.64/28` | Cloud Run VPC egress |
-| Cloud Build | `google_compute_subnetwork.cloudbuild` | `subnet-cloudbuild-pool-stg` | `172.31.30.80/28` | Cloud Build private pool subnet |
-| Composer | `google_compute_subnetwork.composer` | `subnet-composer-stg` | `172.31.30.96/27` | Composer subnet |
+| Network | existing subnet by default | `subnet-common-gke` | check current CIDR | GKE Autopilot node subnet |
+| Pod Range | existing secondary range | `pod-gitlab` | check current CIDR | GitLab Pod IP |
+| Service Range | existing secondary range | `svc-gitlab` | check current CIDR | GKE Service IP |
+| Cloud Run | optional subnet | `subnet-cloudrun-egress-stg` | `172.31.30.64/28` | Cloud Run VPC egress |
+| Cloud Build | optional subnet | `subnet-cloudbuild-pool-stg` | `172.31.30.80/28` | Cloud Build private pool subnet |
+| Composer | optional subnet | `subnet-composer-stg` | `172.31.30.96/27` | Composer subnet |
 | GKE | `google_container_cluster.gitlab` | `gke-gitlab-stg-01` | Autopilot | GitLab runtime |
 | Database | `google_sql_database_instance.gitlab` | `sql-gitlab-stg-01` | PostgreSQL 15 | External GitLab DB |
 | Redis | `google_redis_instance.gitlab` | `redis-gitlab-stg-01` | Redis 7 / 1GB | External GitLab Redis |
-| Backup | `google_storage_bucket.gitlab_backup` | project based | 30-day lifecycle | GitLab backup target |
+| Backup | optional bucket | project based | disabled by default | GitLab backup target |
 | GitLab | `helm_release.gitlab` | `gitlab` | GitLab CE chart | GitLab app |
+
+## Existing Resource Mode
+
+The default `terraform.tfvars.example` uses existing network resources to avoid CIDR and PSA conflicts.
+
+| Variable | Default | Reason |
+|---|---:|---|
+| `create_network_subnets` | `false` | Use existing `subnet-common-gke` |
+| `existing_gke_subnet_name` | `subnet-common-gke` | Avoid `172.31.30.0/27` conflict |
+| `create_private_service_connection` | `false` | Use existing `psa-vpc-d-shared-base` |
+| `create_backup_bucket` | `false` | Avoid GCS bucket create permission error |
+
+Check existing GKE secondary range names before apply.
+
+```bash
+gcloud compute networks subnets describe subnet-common-gke \
+  --project=pjt-d-shared-base \
+  --region=asia-northeast3 \
+  --format="yaml(name,ipCidrRange,secondaryIpRanges)"
+```
+
+Set these values in `terraform.tfvars` to the actual secondary range names from the command output.
+
+```hcl
+gke_pod_range_name     = "ACTUAL_POD_RANGE_NAME"
+gke_service_range_name = "ACTUAL_SERVICE_RANGE_NAME"
+```
 
 ## API Prerequisite
 
