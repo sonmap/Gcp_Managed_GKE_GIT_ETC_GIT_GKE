@@ -90,9 +90,13 @@ resource "helm_release" "gitlab" {
         }
         gitaly = {
           persistence = {
-            size = "100Gi"
+            size = var.gitlab_gitaly_storage_size
           }
         }
+      }
+
+      "gitlab-runner" = {
+        install = false
       }
 
       "gitlab-shell" = {
