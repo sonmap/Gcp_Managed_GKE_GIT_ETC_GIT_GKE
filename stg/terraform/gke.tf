@@ -10,7 +10,7 @@ resource "google_container_cluster" "gitlab" {
 
   ip_allocation_policy {
     cluster_secondary_range_name  = var.gke_pod_range_name
-    services_secondary_range_name = var.gke_service_range_name
+    services_secondary_range_name = var.gke_service_range_name == "" ? null : var.gke_service_range_name
   }
 
   private_cluster_config {
