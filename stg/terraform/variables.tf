@@ -22,6 +22,12 @@ variable "network_name" {
   default     = "vpc-d-shared-base"
 }
 
+variable "enable_project_services" {
+  description = "Set true only when the Terraform runner has serviceusage.services.list and serviceusage.services.enable permissions."
+  type        = bool
+  default     = false
+}
+
 variable "cluster_name" {
   description = "GKE Autopilot cluster name."
   type        = string
