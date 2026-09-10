@@ -28,6 +28,48 @@ variable "enable_project_services" {
   default     = false
 }
 
+variable "create_network_subnets" {
+  description = "Set false to use an existing Shared VPC subnet instead of creating new subnets."
+  type        = bool
+  default     = false
+}
+
+variable "existing_gke_subnet_name" {
+  description = "Existing subnet name for the GKE Autopilot cluster."
+  type        = string
+  default     = "subnet-common-gke"
+}
+
+variable "gke_pod_range_name" {
+  description = "Existing GKE pod secondary range name."
+  type        = string
+  default     = "pod-gitlab"
+}
+
+variable "gke_service_range_name" {
+  description = "Existing GKE service secondary range name."
+  type        = string
+  default     = "svc-gitlab"
+}
+
+variable "create_private_service_connection" {
+  description = "Set false when Private Service Access already exists on the VPC."
+  type        = bool
+  default     = false
+}
+
+variable "private_service_allocated_range_name" {
+  description = "Existing or new allocated PSA range name."
+  type        = string
+  default     = "psa-vpc-d-shared-base"
+}
+
+variable "create_backup_bucket" {
+  description = "Set false when the Terraform runner cannot create GCS buckets."
+  type        = bool
+  default     = false
+}
+
 variable "cluster_name" {
   description = "GKE Autopilot cluster name."
   type        = string
