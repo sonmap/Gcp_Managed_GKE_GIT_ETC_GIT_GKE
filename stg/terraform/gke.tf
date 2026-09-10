@@ -6,11 +6,11 @@ resource "google_container_cluster" "gitlab" {
 
   enable_autopilot = true
   network          = local.network_self_link
-  subnetwork       = google_compute_subnetwork.gke.self_link
+  subnetwork       = local.gke_subnet_self_link
 
   ip_allocation_policy {
-    cluster_secondary_range_name  = "pod-gitlab"
-    services_secondary_range_name = "svc-gitlab"
+    cluster_secondary_range_name  = var.gke_pod_range_name
+    services_secondary_range_name = var.gke_service_range_name
   }
 
   private_cluster_config {
