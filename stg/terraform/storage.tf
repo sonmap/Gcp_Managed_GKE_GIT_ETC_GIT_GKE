@@ -1,4 +1,6 @@
 resource "google_storage_bucket" "gitlab_backup" {
+  count = var.create_backup_bucket ? 1 : 0
+
   project                     = var.service_project_id
   name                        = "${var.service_project_id}-gitlab-stg-backup"
   location                    = var.region
