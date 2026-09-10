@@ -16,6 +16,26 @@
 | Backup | `google_storage_bucket.gitlab_backup` | project based | 30-day lifecycle | GitLab backup target |
 | GitLab | `helm_release.gitlab` | `gitlab` | GitLab CE chart | GitLab app |
 
+## API Prerequisite
+
+Run API enablement first with an account that has `serviceusage.services.enable`.
+
+```bash
+gcloud services enable \
+  compute.googleapis.com \
+  container.googleapis.com \
+  sqladmin.googleapis.com \
+  redis.googleapis.com \
+  servicenetworking.googleapis.com \
+  artifactregistry.googleapis.com \
+  cloudbuild.googleapis.com \
+  run.googleapis.com \
+  dns.googleapis.com \
+  --project=prj-b-cicd-local-236d
+```
+
+Keep `enable_project_services = false` when the Terraform runner does not have `serviceusage.services.list`.
+
 ## Run
 
 ```bash
