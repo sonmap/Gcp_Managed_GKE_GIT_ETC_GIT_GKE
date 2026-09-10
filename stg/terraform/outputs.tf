@@ -7,7 +7,7 @@ output "cluster_location" {
 }
 
 output "gke_subnet" {
-  value = google_compute_subnetwork.gke.self_link
+  value = local.gke_subnet_self_link
 }
 
 output "gitlab_domain" {
@@ -23,7 +23,7 @@ output "redis_host" {
 }
 
 output "backup_bucket" {
-  value = google_storage_bucket.gitlab_backup.name
+  value = var.create_backup_bucket ? google_storage_bucket.gitlab_backup[0].name : "not-created"
 }
 
 output "get_credentials_command" {
