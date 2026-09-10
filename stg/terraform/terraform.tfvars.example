@@ -13,6 +13,7 @@ create_backup_bucket            = false
 cluster_name                    = "gke-gitlab-stg-01"
 gitlab_host_name                = "gitlab-stg"
 gitlab_base_domain              = "sonmap.net"
+gitlab_gitaly_storage_size      = "20Gi"
 
 gitlab_initial_root_password = "ChangeMe-Use-Strong-Password-1234!"
 
