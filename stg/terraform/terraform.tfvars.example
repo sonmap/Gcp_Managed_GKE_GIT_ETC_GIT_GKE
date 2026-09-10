@@ -1,11 +1,18 @@
-host_project_id          = "pjt-d-shared-base"
-service_project_id       = "prj-b-cicd-local-236d"
-region                   = "asia-northeast3"
-network_name             = "vpc-d-shared-base"
-enable_project_services  = false
-cluster_name             = "gke-gitlab-stg-01"
-gitlab_host_name         = "gitlab-stg"
-gitlab_base_domain       = "sonmap.net"
+host_project_id                 = "pjt-d-shared-base"
+service_project_id              = "prj-b-cicd-local-236d"
+region                          = "asia-northeast3"
+network_name                    = "vpc-d-shared-base"
+enable_project_services         = false
+create_network_subnets          = false
+existing_gke_subnet_name        = "subnet-common-gke"
+gke_pod_range_name              = "pod-gitlab"
+gke_service_range_name          = "svc-gitlab"
+create_private_service_connection = false
+private_service_allocated_range_name = "psa-vpc-d-shared-base"
+create_backup_bucket            = false
+cluster_name                    = "gke-gitlab-stg-01"
+gitlab_host_name                = "gitlab-stg"
+gitlab_base_domain              = "sonmap.net"
 
 gitlab_initial_root_password = "ChangeMe-Use-Strong-Password-1234!"
 
