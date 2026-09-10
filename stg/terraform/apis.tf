@@ -1,5 +1,5 @@
 resource "google_project_service" "service_project" {
-  for_each = toset([
+  for_each = var.enable_project_services ? toset([
     "compute.googleapis.com",
     "container.googleapis.com",
     "sqladmin.googleapis.com",
@@ -9,7 +9,7 @@ resource "google_project_service" "service_project" {
     "cloudbuild.googleapis.com",
     "run.googleapis.com",
     "dns.googleapis.com"
-  ])
+  ]) : toset([])
 
   project            = var.service_project_id
   service            = each.value
