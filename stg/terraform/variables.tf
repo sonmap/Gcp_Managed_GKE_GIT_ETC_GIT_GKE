@@ -43,13 +43,13 @@ variable "existing_gke_subnet_name" {
 variable "gke_pod_range_name" {
   description = "Existing GKE pod secondary range name."
   type        = string
-  default     = "pod-gitlab"
+  default     = "pods-sbx-main"
 }
 
 variable "gke_service_range_name" {
-  description = "Existing GKE service secondary range name."
+  description = "Existing GKE service secondary range name. Leave empty when the subnet has no service secondary range."
   type        = string
-  default     = "svc-gitlab"
+  default     = ""
 }
 
 variable "create_private_service_connection" {
