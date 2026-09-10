@@ -100,6 +100,12 @@ variable "gitlab_chart_version" {
   default     = "8.11.2"
 }
 
+variable "gitlab_gitaly_storage_size" {
+  description = "Gitaly PVC size for Git repositories."
+  type        = string
+  default     = "20Gi"
+}
+
 variable "gitlab_initial_root_password" {
   description = "Initial GitLab root password."
   type        = string
